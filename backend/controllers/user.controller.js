@@ -23,4 +23,19 @@ async function registerUser(req, res, next) {
   res.status(201).json({ token, user });
 }
 
-module.exports = { registerUser };
+async function loginUser(req, res, next) {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { email, password } = req.body;
+    const user = await UserService.loginUser({ email, password });
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(401).json({message : error.message})
+  }
+}
+
+module.exports = { registerUser, loginUser };
