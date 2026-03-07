@@ -55,7 +55,8 @@ const getProfile = async (req, res) => {
 
 const logoutUser = async (req, res) => {
   try {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
+
     if (token) {
       await blockedTOkenModel.create({ token: token });
     }

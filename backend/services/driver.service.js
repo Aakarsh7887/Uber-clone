@@ -41,4 +41,33 @@ const registerDriver = async ({
   return { token, driver };
 };
 
-module.exports = { registerDriver };
+const loginDriver = async ({ email, password }) => {
+  if (!email || !password) {
+    const error = new Error("All fields are required");
+    error.status(400);
+    throw error;
+  }
+  let driver = await DriverModel.findOne({ email: email }).select("+password");
+  if (!driver) {
+    throw new Error("Invalid credentials!");
+  }
+  const isMatch = driver.comparePassword(password);
+  if (!isMatch) {
+    throw new Error("Invalid credentials!");
+  }
+  const token = driver.generateAuthToken();
+  driver = driver.toObject();
+  delete driver.password;
+  return { token, driver };
+};
+
+const getProfile = async ({ _id }) => {
+  const driverProfile = await DriverModel.findById(_id);
+
+  if (!driverProfile) {
+    throw new Error("No driver found.");
+  }
+  return driverProfile.toObject();
+};
+
+module.exports = { registerDriver, loginDriver, getProfile };

@@ -12,6 +12,9 @@ const authUser = async (req, res, next) => {
   }
   try {
     const isMatch = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Unauthorize" });
+    }
     req.user = isMatch;
     return next();
   } catch (error) {
