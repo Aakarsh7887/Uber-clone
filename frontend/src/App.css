@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.navbar {
+  height: 70px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin-left: 30px;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links a:hover {
+  color: #ccc;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.btn-primary {
+  text-decoration: none;
+  color: white;
+  margin-right: 20px;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.landing {
+  height: calc(100vh - 80px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 40px;
+}
+
+.left {
+  width: 45%;
+}
+
+.left h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.left p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.ride-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.ride-form input {
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid gray;
+}
+
+.ride-form button {
+  padding: 12px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.features {
+  display: flex;
+  margin-top: 30px;
+}
+
+.feature {
+  margin-right: 20px;
+}
+
+.right {
+  height: 90%;
+  width: 45%;
+  margin: 0 4rem;
+  border-radius: 40px;
+}
+
+.right img {
+  width: 100%;
+  height: 90%;
+  border-radius: 40px;
+}
