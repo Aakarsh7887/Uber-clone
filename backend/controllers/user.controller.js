@@ -10,11 +10,11 @@ async function registerUser(req, res) {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { fullname, email, password } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
     const user = await UserService.createUser({
-      firstname: fullname.firstname,
-      lastname: fullname.lastname,
+      firstname: firstname,
+      lastname: lastname,
       email,
       password,
     });

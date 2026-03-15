@@ -18,7 +18,7 @@ const registerDriver = async (req, res) => {
       location,
     });
 
-    return res.status(201).json({ newDriver });
+    return res.status(201).json(newDriver);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -33,7 +33,7 @@ const loginDriver = async (req, res) => {
   try {
     const { email, password } = req.body;
     const driver = await driverService.loginDriver({ email, password });
-    return res.status(200).json({ driver });
+    return res.status(200).json(driver);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -59,7 +59,7 @@ const getProfile = async (req, res) => {
   try {
     const { _id } = req.user;
     const profile = await driverService.getProfile({ _id });
-    return res.status(200).json({ profile });
+    return res.status(200).json(profile);
   } catch (error) {
     return res.status(error.status || 500).json({ message: error.message });
   }
