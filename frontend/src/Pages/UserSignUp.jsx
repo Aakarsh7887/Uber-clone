@@ -1,120 +1,142 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import axiosInstance from "../utils/axios";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext";
 
-function UserSignUp() {
+const UserSignup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userData, setUserData] = useState({});
+
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const { user, setUser } = useContext(UserDataContext);
 
-  const handleSubmit = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    axiosInstance
-      .post("/users/register", userData)
-      .then((response) => {
-        alert("Registration successfull! ");
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        setUserData({
-          firstname: "",
-          lastname: "",
-          email: "",
-          password: "",
-        });
-        navigate("/user-dashboard");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const newUser = {
+      fullname: {
+        firstname: firstName,
+        lastname: lastName,
+      },
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/register`,
+        newUser,
+      );
+
+      if (response.status === 201) {
+        const data = response.data;
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+
+        setEmail("");
+        setFirstName("");
+        setLastName("");
+        setPassword("");
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Signup failed:", error);
+      alert("Signup failed. Please try again.");
+    }
   };
-
   return (
-    <>
-      <Navbar />
-      <main className="auth-page">
-        <div className="auth-card">
-          <h1>Welcome to Uber</h1>
-          <p>Just a few steps to get you on the road.</p>
+    <div>
+      <div className="p-7 h-screen flex flex-col justify-between">
+        <div>
+          <img
+            className="w-16 mb-10"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s"
+            alt=""
+          />
 
-          <form onSubmit={handleSubmit} className="auth-form">
-            <div className="grid-2">
-              <label>
-                First Name
-                <input
-                  type="text"
-                  name="firstname"
-                  placeholder="Enter your firstname"
-                  value={userData.firstname}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <label>
-                Last Name
-                <input
-                  type="text"
-                  name="lastname"
-                  placeholder="Enter your lastname"
-                  value={userData.lastname}
-                  onChange={handleChange}
-                />
-              </label>
+          <form
+            onSubmit={(e) => {
+              submitHandler(e);
+            }}
+          >
+            <h3 className="text-lg w-1/2  font-medium mb-2">
+              What's your name
+            </h3>
+            <div className="flex gap-4 mb-7">
+              <input
+                required
+                className="bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border  text-lg placeholder:text-base"
+                type="text"
+                placeholder="First name"
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
+              />
+              <input
+                required
+                className="bg-[#eeeeee] w-1/2  rounded-lg px-4 py-2 border  text-lg placeholder:text-base"
+                type="text"
+                placeholder="Last name"
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
+              />
             </div>
 
-            <label>
-              Email
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={userData.email}
-                onChange={handleChange}
-                required
-              />
-            </label>
+            <h3 className="text-lg font-medium mb-2">What's your email</h3>
+            <input
+              required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              className="bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base"
+              type="email"
+              placeholder="email@example.com"
+            />
 
-            <label>
-              Password
-              <input
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={userData.password}
-                onChange={handleChange}
-                required
-              />
-            </label>
+            <h3 className="text-lg font-medium mb-2">Enter Password</h3>
 
-            <button type="submit" className="btn-primary">
-              Create Account
+            <input
+              className="bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              required
+              type="password"
+              placeholder="password"
+            />
+
+            <button className="bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base">
+              Create account
             </button>
-
-            <div className="auth-footer">
-              <span>Looking to drive?</span>
-              <Link to="/captain-register">Register as a driver</Link>
-            </div>
-            <div className="auth-footer">
-              <span>Already have an account?</span>
-              <Link to="/login">Login Here</Link>
-            </div>
           </form>
+          <p className="text-center">
+            Already have a account?{" "}
+            <Link to="/login" className="text-blue-600">
+              Login here
+            </Link>
+          </p>
         </div>
-      </main>
-    </>
+        <div>
+          <p className="text-[10px] leading-tight">
+            This site is protected by reCAPTCHA and the{" "}
+            <span className="underline">Google Privacy Policy</span> and{" "}
+            <span className="underline">Terms of Service apply</span>.
+          </p>
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
-export default UserSignUp;
+export default UserSignup;

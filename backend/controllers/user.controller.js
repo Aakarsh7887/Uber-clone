@@ -1,69 +1,79 @@
-const jwt = require("jsonwebtoken");
-const UserModel = require("../models/user.model");
-const UserService = require("../services/user.service");
-const blockedTOkenModel = require("../models/blockedTokens.model");
-const { validationResult } = require("express-validator");
+const userModel = require('../models/user.model');
+const userService = require('../services/user.service');
+const { validationResult } = require('express-validator');
+const blackListTokenModel = require('../models/blackListToken.model');
 
-async function registerUser(req, res) {
-  try {
+module.exports.registerUser = async (req, res, next) => {
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
     }
-    const { firstname, lastname, email, password } = req.body;
 
-    const user = await UserService.createUser({
-      firstname: firstname,
-      lastname: lastname,
-      email,
-      password,
+    const { fullname, email, password } = req.body;
+
+    const isUserAlready = await userModel.findOne({ email });
+
+    if (isUserAlready) {
+        return res.status(400).json({ message: 'User already exist' });
+    }
+
+    const hashedPassword = await userModel.hashPassword(password);
+
+    const user = await userService.createUser({
+        firstname: fullname.firstname,
+        lastname: fullname.lastname,
+        email,
+        password: hashedPassword
     });
 
-    res.status(201).json({ user });
-  } catch (error) {
-    res.status(error.status || 500).json({ message: error.message || "Internal Server Error" });
-  }
+    const token = user.generateAuthToken();
+    
+    res.status(201).json({ token, user });
+
+
 }
 
-async function loginUser(req, res) {
-  try {
+module.exports.loginUser = async (req, res, next) => {
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
     }
-    const { email, password } = req.body;
-    const user = await UserService.loginUser({ email, password });
 
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(error.status || 401).json({ message: error.message || "Unauthorized" });
-  }
+    const { email, password } = req.body;
+
+    const user = await userModel.findOne({ email }).select('+password');
+
+    if (!user) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    const isMatch = await user.comparePassword(password);
+
+    if (!isMatch) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    const token = user.generateAuthToken();
+
+    res.cookie('token', token);
+
+    res.status(200).json({ token, user });
 }
 
-const getProfile = async (req, res) => {
-  try {
-    const { _id } = req.user;
-    const user = await UserModel.findById(_id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(error.status || 500).json({ message: error.message || "Internal Server Error" });
-  }
-};
+module.exports.getUserProfile = async (req, res, next) => {
 
-const logoutUser = async (req, res) => {
-  try {
-    const token = req.cookies?.token || req.headers.authorization?.split(" ")[1];
+    res.status(200).json(req.user);
 
-    if (token) {
-      await blockedTOkenModel.create({ token: token });
-    }
-    res.status(200).json({ message: "Logged out successfully" });
-  } catch (error) {
-    res.status(error.status || 500).json({ message: error.message || "Internal Server Error" });
-  }
-};
+}
 
-module.exports = { registerUser, loginUser, getProfile, logoutUser };
+module.exports.logoutUser = async (req, res, next) => {
+    res.clearCookie('token');
+    const token = req.cookies.token || req.headers.authorization.split(' ')[ 1 ];
+
+    await blackListTokenModel.create({ token });
+
+    res.status(200).json({ message: 'Logged out' });
+
+}
