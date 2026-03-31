@@ -9,15 +9,15 @@ const Start = () => {
       style={{ backgroundImage: `url(${main})` }}
     >
       <img
-        className="w-16 ml-8"
-        src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoid2VhcmVcL2ZpbGVcLzhGbTh4cU5SZGZUVjUxYVh3bnEyLnN2ZyJ9:weare:F1cOF9Bps96cMy7r9Y2d7affBYsDeiDoIHfqZrbcxAw?width=1200&height=417"
-        alt=""
+        className="w-auto h-16 absolute left-5 top-5 z-10"
+        src="/goswift_logo.png"
+        alt="GoSwift Logo"
       />
       <div className="bg-white pb-8 py-4 px-4">
-        <h2 className="text-[30px] font-semibold">Get Started with Uber</h2>
+        <h2 className="text-[30px] font-bold">Get Started with GoSwift</h2>
         <Link
           to="/login"
-          className="flex items-center justify-center w-full bg-black text-white py-3 rounded-lg mt-5"
+          className="flex items-center justify-center w-full bg-[#0052FF] text-white font-semibold py-3 rounded-xl mt-5 transition-colors hover:bg-blue-700"
         >
           Continue
         </Link>

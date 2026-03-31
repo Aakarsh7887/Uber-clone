@@ -39,8 +39,8 @@ const Captainlogin = () => {
       <div>
         <img
           className="w-20 mb-3"
-          src="https://www.svgrepo.com/show/505031/uber-driver.svg"
-          alt=""
+          src="/goswift_captain_logo.png"
+          alt="GoSwift Captain"
         />
 
         <form
@@ -73,7 +73,7 @@ const Captainlogin = () => {
             placeholder="password"
           />
 
-          <button className="bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base">
+          <button className="bg-[#0052FF] text-white font-semibold mb-3 rounded-xl hover:bg-blue-700 transition px-4 py-2 w-full text-lg">
             Login
           </button>
         </form>

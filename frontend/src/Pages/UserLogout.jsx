@@ -6,20 +6,22 @@ export const UserLogout = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  axios
-    .get(`${import.meta.env.VITE_API_URL}/users/logout`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        localStorage.removeItem("token");
-        navigate("/login");
-      }
-    });
+  React.useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/users/logout`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }
+      });
+  }, [token, navigate]);
 
-  return <div>UserLogout</div>;
+  return <div>Logging out...</div>;
 };
 
 export default UserLogout;

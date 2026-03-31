@@ -62,8 +62,8 @@ const CaptainSignup = () => {
       <div>
         <img
           className="w-20 mb-3"
-          src="https://www.svgrepo.com/show/505031/uber-driver.svg"
-          alt=""
+          src="/goswift_captain_logo.png"
+          alt="GoSwift Captain"
         />
 
         <form
@@ -175,7 +175,7 @@ const CaptainSignup = () => {
             </select>
           </div>
 
-          <button className="bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base">
+          <button className="bg-[#0052FF] hover:bg-blue-700 transition text-white font-semibold mb-3 rounded-xl px-4 py-2 w-full text-lg">
             Create Captain Account
           </button>
         </form>

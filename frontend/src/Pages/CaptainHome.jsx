@@ -102,14 +102,14 @@ const CaptainHome = () => {
 
   return (
     <div className="h-screen">
-      <div className="fixed p-6 top-0 flex items-center justify-between w-screen">
+      <div className="fixed p-6 top-0 flex items-center justify-between w-screen z-50">
         <img
-          className="w-16"
-          src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-          alt=""
+          className="w-auto h-16 absolute left-5 top-5 z-10"
+          src="/goswift_logo.png"
+          alt="GoSwift Logo"
         />
         <Link
-          to="/captain-home"
+          to="/captain/logout"
           className=" h-10 w-10 bg-white flex items-center justify-center rounded-full"
         >
           <i className="text-lg font-medium ri-logout-box-r-line"></i>

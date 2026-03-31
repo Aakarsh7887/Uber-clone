@@ -6,6 +6,11 @@ import { useNavigate } from "react-router-dom";
 const FinishRide = (props) => {
   const navigate = useNavigate();
 
+  const distanceText = props.ride?.distance
+    ? `${(props.ride.distance / 1000).toFixed(2)} KM`
+    : "N/A";
+  const paymentMethod = props.ride?.paymentMode || "Cash";
+
   async function endRide() {
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/rides/end-ride`,
@@ -39,21 +44,24 @@ const FinishRide = (props) => {
         <div className="flex items-center gap-3 ">
           <img
             className="h-12 rounded-full object-cover w-12"
-            src="https://i.pinimg.com/236x/af/26/28/af26280b0ca305be47df0b799ed1b12b.jpg"
+            src={
+              props.ride?.user.profilePic ||
+              "https://i.pinimg.com/236x/af/26/28/af26280b0ca305be47df0b799ed1b12b.jpg"
+            }
             alt=""
           />
           <h2 className="text-lg font-medium">
             {props.ride?.user.fullname.firstname}
           </h2>
         </div>
-        <h5 className="text-lg font-semibold">2.2 KM</h5>
+        <h5 className="text-lg font-semibold">{distanceText}</h5>
       </div>
       <div className="flex gap-2 justify-between flex-col items-center">
         <div className="w-full mt-5">
           <div className="flex items-center gap-5 p-3 border-b-2">
             <i className="ri-map-pin-user-fill"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">{props.ride?.pickup}</h3>
               <p className="text-sm -mt-1 text-gray-600">
                 {props.ride?.pickup}
               </p>
@@ -62,7 +70,7 @@ const FinishRide = (props) => {
           <div className="flex items-center gap-5 p-3 border-b-2">
             <i className="text-lg ri-map-pin-2-fill"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">{props.ride?.destination}</h3>
               <p className="text-sm -mt-1 text-gray-600">
                 {props.ride?.destination}
               </p>
@@ -72,7 +80,7 @@ const FinishRide = (props) => {
             <i className="ri-currency-line"></i>
             <div>
               <h3 className="text-lg font-medium">₹{props.ride?.fare} </h3>
-              <p className="text-sm -mt-1 text-gray-600">Cash Cash</p>
+              <p className="text-sm -mt-1 text-gray-600">{paymentMethod}</p>
             </div>
           </div>
         </div>

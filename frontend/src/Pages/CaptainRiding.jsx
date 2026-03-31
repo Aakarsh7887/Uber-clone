@@ -28,11 +28,11 @@ const CaptainRiding = () => {
 
   return (
     <div className="h-screen relative flex flex-col justify-end">
-      <div className="fixed p-6 top-0 flex items-center justify-between w-screen">
+      <div className="fixed p-6 top-0 flex items-center justify-between w-screen z-50">
         <img
-          className="w-16"
-          src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-          alt=""
+          className="w-auto h-8"
+          src="/goswift_logo.png"
+          alt="GoSwift Logo"
         />
         <Link
           to="/captain-home"
@@ -55,7 +55,7 @@ const CaptainRiding = () => {
           <i className="text-3xl text-gray-800 ri-arrow-up-wide-line"></i>
         </h5>
         <h4 className="text-xl font-semibold">{"Heading to Destination"}</h4>
-        <button className=" bg-green-600 text-white font-semibold p-3 px-10 rounded-lg">
+        <button className=" bg-[#0052FF] text-white font-semibold p-3 px-10 rounded-xl hover:bg-blue-700 transition">
           Complete Ride
         </button>
       </div>

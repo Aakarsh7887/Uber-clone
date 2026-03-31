@@ -1,6 +1,10 @@
 import React from "react";
 
 const RidePopUp = (props) => {
+  const rideDistance = props.ride?.distance
+    ? `${(props.ride.distance / 1000).toFixed(2)} KM`
+    : "N/A";
+
   return (
     <div>
       <h5
@@ -25,7 +29,7 @@ const RidePopUp = (props) => {
               props.ride?.user.fullname.lastname}
           </h2>
         </div>
-        <h5 className="text-lg font-semibold">{props.ride?.distance || "Nearby"}</h5>
+        <h5 className="text-lg font-semibold">{rideDistance}</h5>
       </div>
       <div className="flex gap-2 justify-between flex-col items-center">
         <div className="w-full mt-5">

@@ -55,9 +55,9 @@ const UserSignup = () => {
       <div className="p-7 h-screen flex flex-col justify-between">
         <div>
           <img
-            className="w-16 mb-10"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s"
-            alt=""
+            className="w-auto h-8 mb-10"
+            src="/goswift_logo.png"
+            alt="GoSwift Logo"
           />
 
           <form
@@ -116,7 +116,7 @@ const UserSignup = () => {
               placeholder="password"
             />
 
-            <button className="bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base">
+            <button className="bg-[#0052FF] text-white font-semibold mb-3 rounded-xl hover:bg-blue-700 transition px-4 py-2 w-full text-lg">
               Create account
             </button>
           </form>

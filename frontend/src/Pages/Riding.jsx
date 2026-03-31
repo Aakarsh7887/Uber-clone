@@ -11,9 +11,15 @@ const Riding = () => {
   const { socket } = useContext(SocketContext);
   const navigate = useNavigate();
 
-  socket.on("ride-ended", () => {
-    navigate("/home");
-  });
+  useEffect(() => {
+    socket.on("ride-ended", () => {
+      navigate("/home");
+    });
+
+    return () => {
+      socket.off("ride-ended");
+    };
+  }, [socket, navigate]);
 
   return (
     <div className="h-screen">
@@ -30,8 +36,8 @@ const Riding = () => {
         <div className="flex items-center justify-between">
           <img
             className="h-12"
-            src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg"
-            alt=""
+            src="/goswift_car.png"
+            alt="GoSwift Sedan"
           />
           <div className="text-right">
             <h2 className="text-lg font-medium capitalize">
@@ -40,7 +46,10 @@ const Riding = () => {
             <h4 className="text-xl font-semibold -mt-1 -mb-1">
               {ride?.captain.vehicle.plate}
             </h4>
-            <p className="text-sm text-gray-600">Maruti Suzuki Alto</p>
+            <p className="text-sm text-gray-600 capitalize">
+              {ride?.captain.vehicle.vehicleType ||
+                "Vehicle details not available"}
+            </p>
           </div>
         </div>
 
@@ -49,7 +58,9 @@ const Riding = () => {
             <div className="flex items-center gap-5 p-3 border-b-2">
               <i className="text-lg ri-map-pin-2-fill"></i>
               <div>
-                <h3 className="text-lg font-medium">562/11-A</h3>
+                <h3 className="text-lg font-medium">
+                  {ride?.destination || "Destination not set"}
+                </h3>
                 <p className="text-sm -mt-1 text-gray-600">
                   {ride?.destination}
                 </p>
@@ -59,14 +70,22 @@ const Riding = () => {
               <i className="ri-currency-line"></i>
               <div>
                 <h3 className="text-lg font-medium">₹{ride?.fare} </h3>
-                <p className="text-sm -mt-1 text-gray-600">Cash Cash</p>
+                <p className="text-sm -mt-1 text-gray-600">
+                  {ride?.paymentMode || "Cash"}
+                </p>
               </div>
             </div>
           </div>
         </div>
-        <button className="w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg">
+        <button 
+          onClick={() => alert(`Pay ₹${ride?.fare || ""} via cash or UPI directly to the captain at the end of the ride.`)}
+          className="w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg hover:bg-green-700 transition-colors"
+        >
           Make a Payment
         </button>
+        <p className="text-center mt-4 mb-2 text-sm text-gray-600 font-medium animate-pulse">
+          Waiting for captain to end the ride...
+        </p>
       </div>
     </div>
   );

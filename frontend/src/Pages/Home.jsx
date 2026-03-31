@@ -11,7 +11,7 @@ import WaitingForDriver from "../components/WaitingForDriver";
 import { SocketContext } from "../context/SocketContext";
 import { useContext } from "react";
 import { UserDataContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import LiveTracking from "../components/LiveTracking";
 
 const Home = () => {
@@ -100,9 +100,8 @@ const Home = () => {
     function () {
       if (panelOpen) {
         gsap.to(panelRef.current, {
-          height: "70%",
+          height: "55%",
           padding: 24,
-          // opacity:1
         });
         gsap.to(panelCloseRef.current, {
           opacity: 1,
@@ -111,7 +110,6 @@ const Home = () => {
         gsap.to(panelRef.current, {
           height: "0%",
           padding: 0,
-          // opacity:0
         });
         gsap.to(panelCloseRef.current, {
           opacity: 0,
@@ -217,10 +215,16 @@ const Home = () => {
   return (
     <div className="h-screen relative overflow-hidden">
       <img
-        className="w-16 absolute left-5 top-5"
-        src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-        alt=""
+        className="w-auto h-16 absolute left-5 top-5 z-10"
+        src="/goswift_logo.png"
+        alt="GoSwift Logo"
       />
+      <Link
+        to="/user/logout"
+        className="fixed right-5 top-5 h-10 w-10 bg-white flex items-center justify-center rounded-full z-10"
+      >
+        <i className="text-lg font-medium ri-logout-box-r-line"></i>
+      </Link>
       <div className="h-screen w-screen">
         {/* image for temporary use  */}
         <LiveTracking />
@@ -269,7 +273,7 @@ const Home = () => {
           </form>
           <button
             onClick={findTrip}
-            className="bg-black text-white px-4 py-2 rounded-lg mt-3 w-full"
+            className="bg-[#0052FF] text-white font-semibold px-4 py-3 rounded-xl mt-3 w-full hover:bg-blue-700 transition-colors"
           >
             Find Trip
           </button>
