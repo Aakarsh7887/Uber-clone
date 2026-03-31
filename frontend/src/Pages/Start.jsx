@@ -13,7 +13,7 @@ const Start = () => {
         src="/goswift_logo.png"
         alt="GoSwift Logo"
       />
-      <div className="bg-white pb-8 py-4 px-4">
+      <div className="bg-white w-full absolute bottom-5 pb-8 py-4 px-4">
         <h2 className="text-[30px] font-bold">Get Started with GoSwift</h2>
         <Link
           to="/login"
