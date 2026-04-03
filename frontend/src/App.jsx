@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
-import Start from "./pages/Start";
-import UserLogin from "./pages/UserLogin";
-import UserSignup from "./pages/UserSignUp";
-import Captainlogin from "./pages/Captainlogin";
-import CaptainSignup from "./pages/CaptainSignup";
-import Home from "./pages/Home";
-import UserProtectWrapper from "./pages/UserProtectWrapper";
-import UserLogout from "./pages/UserLogout";
-import CaptainHome from "./pages/CaptainHome";
-import CaptainProtectWrapper from "./pages/CaptainProtectWrapper";
-import CaptainLogout from "./pages/CaptainLogout";
-import Riding from "./pages/Riding";
-import CaptainRiding from "./pages/CaptainRiding";
+import Start from "./Pages/Start";
+import UserLogin from "./Pages/UserLogin";
+import UserSignup from "./Pages/UserSignUp";
+import Captainlogin from "./Pages/CaptainLogin";
+import CaptainSignup from "./Pages/CaptainSignUp";
+import Home from "./Pages/Home";
+import UserProtectWrapper from "./Pages/UserProtectWrapper";
+import UserLogout from "./Pages/UserLogout";
+import CaptainHome from "./Pages/CaptainHome";
+import CaptainProtectWrapper from "./Pages/CaptainProtectWrapper";
+import CaptainLogout from "./Pages/CaptainLogout";
+import Riding from "./Pages/Riding";
+import CaptainRiding from "./Pages/CaptainRiding";
 import "remixicon/fonts/remixicon.css";
 
 const App = () => {
