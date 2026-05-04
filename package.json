@@ -1,0 +1,39 @@
+{
+  "name": "uber-clone",
+  "version": "1.0.0",
+  "description": "A modern ride-sharing application built with MERN stack",
+  "private": true,
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "docker compose up -d",
+    "stop": "docker compose down",
+    "dev": "docker compose up",
+    "logs": "docker compose logs -f",
+    "build": "docker compose build",
+    "clean": "docker compose down -v && docker system prune -f",
+    "backend:dev": "cd backend && npm run start",
+    "frontend:dev": "cd frontend && npm run dev",
+    "backend:install": "cd backend && npm install",
+    "frontend:install": "cd frontend && npm install",
+    "install:all": "npm run backend:install && npm run frontend:install",
+    "test": "echo \"Tests to be implemented\" && exit 0"
+  },
+  "keywords": [
+    "uber",
+    "ride-sharing",
+    "mern",
+    "mongodb",
+    "express",
+    "react",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^25.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
