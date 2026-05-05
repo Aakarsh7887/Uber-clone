@@ -111,6 +111,41 @@ pipeline {
             }
         }
 
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(['ec2-ssh-key']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@54.172.8.58 << 'EOF'
+        
+                    # Install docker & compose if not installed
+                    sudo apt update -y
+                    sudo apt install docker.io docker-compose -y
+        
+                    # Stop old app
+                    docker compose down || true
+        
+                    # Clean old code
+                    rm -rf app
+                    mkdir app
+                    cd app
+        
+                    # Clone latest code
+                    git clone https://github.com/Aakarsh7887/Uber-clone.git .
+        
+                    # Setup env files
+                    cp .env.example .env || true
+                    cp backend/.env.example backend/.env || true
+                    cp frontend/.env.example frontend/.env || true
+        
+                    # Start application
+                    docker compose up --build -d
+        
+                    EOF
+                    '''
+                }
+            }
+        }
+
         stage('Integration Tests') {
             steps {
                 echo '🧪 Running integration tests...'
